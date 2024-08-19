@@ -6,11 +6,13 @@ using namespace std;
 /* Validador de numero entero */
 int obtener_entero(string numero_en_texto){
 
+    bool A_es_negativa = false, B_es_negativa = false;
     string NUMEROS = "1234567890";
     unsigned validador = 0;
 
     while (validador < numero_en_texto.length())
-    {
+    {   if (numero_en_texto[0] == '-' && numero_en_texto.length() > 1) {numero_en_texto.erase(0,1); A_es_negativa = true;}
+
         for (unsigned i = 0; i < numero_en_texto.length(); i++)
         {
 
@@ -24,7 +26,9 @@ int obtener_entero(string numero_en_texto){
         }
         if (validador != 0) validador += 1;
     }
-    return stoi(numero_en_texto);
+
+    if (A_es_negativa) return -1*stoi(numero_en_texto);
+    else return stoi(numero_en_texto);
 
 }
 
@@ -35,10 +39,14 @@ int obtener_entero(string numero_en_texto){
     EJECICIO No. 1
 */
 void ejercicio_1(){
-    int A,B;
+    string A,B;
+
     cout<<"\nEscribe un numero entero: "; cin>>A;
+    int a = obtener_entero(A);
     cout<<"\nEscribe otro numero entero: "; cin>>B;
-    cout<<"\nEl residuo de la division "<<A<<"/"<<B<<" es: "<<A%B<<endl<<endl;
+    int b = obtener_entero(B);
+
+    cout<<"\nEl residuo de la division "<<a<<"/"<<b<<" es: "<<a%b<<endl<<endl;
     system("pause");
     system("cls");
 }
