@@ -6,12 +6,12 @@ using namespace std;
 /* Validador de numero entero */
 int obtener_entero(string numero_en_texto){
 
-    bool A_es_negativa = false, B_es_negativa = false;
+    bool El_numero_es_negativo = false;
     string NUMEROS = "1234567890";
     unsigned validador = 0;
 
     while (validador < numero_en_texto.length())
-    {   if (numero_en_texto[0] == '-' && numero_en_texto.length() > 1) {numero_en_texto.erase(0,1); A_es_negativa = true;}
+    {   if (numero_en_texto[0] == '-' && numero_en_texto.length() > 1) {numero_en_texto.erase(0,1); El_numero_es_negativo = true;}
 
         for (unsigned i = 0; i < numero_en_texto.length(); i++)
         {
@@ -27,7 +27,7 @@ int obtener_entero(string numero_en_texto){
         if (validador != 0) validador += 1;
     }
 
-    if (A_es_negativa) return -1*stoi(numero_en_texto);
+    if (El_numero_es_negativo) return -1*stoi(numero_en_texto);
     else return stoi(numero_en_texto);
 
 }
