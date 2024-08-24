@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -26,6 +27,7 @@ void problema_16(); void problema_17();
         /*DECLARACIÓN DE OTRAS FUNCIONES*/
 int verificar_entero(string); /* Esta función verifica si un string
                             puede servir como un numero entero */
+int mayor_a_0 (int);
 
 
 
@@ -436,7 +438,31 @@ void ejercicio_15(){
     EJECICIO No. 16
 */
 void ejercicio_16(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CALCULAR EL PROMEDIO DE LOS N NUMEROS INGRESADOS HASTA QUE SE INGRESE 0\n";
+
+    string n; int N,contador = 0; float suma = 0; bool cero = false, primera_vez =true;
+
+    while (cero != true) {
+        if (primera_vez == true){
+            cout<<"Ingresa un numero entero: "; cin>>n;
+            N = verificar_entero(n);
+            suma += N;
+            primera_vez = false;
+            contador += 1;
+        }
+        else if(primera_vez == false){
+            cout<<"Ingresa otro numero entero: "; cin>>n;
+            N = verificar_entero(n);
+            suma += N;
+            contador += 1;
+        }
+        if (N == 0) {
+            if (contador != 1) contador -= 1;
+            cero = true;
+            cout<<"\nEl promedio es: "<<suma/contador<<endl<<endl;
+        }
+
+    }
 
     system("pause");
     system("cls");
@@ -448,7 +474,29 @@ void ejercicio_16(){
     EJECICIO No. 17
 */
 void ejercicio_17(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CALCULAR EL MAYOR NUMERO INGRESADO\n";
+
+    string n; int N; int Mayor = 0; bool cero = false, primera_vez =true;
+
+    while (cero != true) {
+        if (primera_vez == true){
+            cout<<"Ingresa un numero entero: "; cin>>n;
+            N = verificar_entero(n);
+            Mayor = N;
+            primera_vez = false;
+            if (N == 0) {cout<<"\nNo ingresaste nada, chao!\n"; break;}
+        }
+        else if(primera_vez == false){
+            cout<<"Ingresa otro numero entero: "; cin>>n;
+            N = verificar_entero(n);
+            if (Mayor < N) Mayor = N;
+        }
+        if (N == 0) {
+            cout<<"\nEl Mayor numero ingresado fue: "<<Mayor<<endl<<endl;
+            cero = true;
+        }
+
+    }
 
     system("pause");
     system("cls");
@@ -460,8 +508,17 @@ void ejercicio_17(){
     EJECICIO No. 18
 */
 void ejercicio_18(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   VERIFICAR SI ES UN CUADRADO PERFECTO\n";
 
+    string n; int N; bool si_es = false;
+    cout<<"Ingresa un numero entero: "; cin>>n;
+    N = verificar_entero(n);
+    if (N < 0) cout<<endl<<N<<" NO es un cuadrado perfecto\n\n";
+    for (int numerito = 0; numerito <= N; ++numerito) {
+        if (numerito*numerito == N) {
+            cout<<endl<<N<<" Es un cuadrado perfecto\n\n"; si_es = true; break;}
+    }
+    if (si_es == false && N >= 0) cout<<endl<<N<<" NO es un cuadrado perfecto\n\n";
     system("pause");
     system("cls");
 }
@@ -472,7 +529,21 @@ void ejercicio_18(){
     EJECICIO No. 19
 */
 void ejercicio_19(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   NUMEROS PRIMOS\n";
+
+    int N; string n; bool primo = true;
+    cout<<"Escribe un numero entero: "; cin>>n;
+
+    N = verificar_entero(n);
+
+    if (N <= 1) {cout<<endl<<N<<" NO es un numero primo\n";}
+    else{
+        for (int i = 2; i <= N/2; ++i) {
+            if (N%i == 0){primo = false;}
+        }
+        if(primo == true) cout<<endl<<N<<" es un numero primo\n";
+        else cout<<endl<<N<<" NO es un numero primo\n";
+    }
 
     system("pause");
     system("cls");
@@ -484,7 +555,28 @@ void ejercicio_19(){
     EJECICIO No. 20
 */
 void ejercicio_20(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   NUMEROS PALINDROMOS\n";
+
+    int N; string n; bool negativo = false;
+    cout<<"Escribe un numero entero: "; cin>>n;
+
+    N = verificar_entero(n);
+    int original = N;
+
+    if (N < 0) {N = -1*N; negativo = true;}
+
+    int digito;
+    int alreves = 0;
+    while (N > 0) {
+        digito = N%10;
+
+        alreves = alreves*10 + digito;
+        N = N/10;
+
+    }
+    if (negativo == true) alreves = -1*alreves;
+    if(alreves == original) cout<<endl<<original<<" es un numero palindromo.\n";
+    else cout<<endl<<original<<" NO es un numero palindromo.\n";
 
     system("pause");
     system("cls");
@@ -496,7 +588,27 @@ void ejercicio_20(){
     EJECICIO No. 21
 */
 void ejercicio_21(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CONVERTIR MINUSCULA A MAYUSCULA Y VICEVERSA\n";
+    char letra; string Mayusculas = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ", minusculas = "abcdefghijklmnñopqrstuvwxyz";
+    cout<<"\nIngresa una letra: "; cin>> letra;
+
+    bool aceptable = false;
+    while (aceptable == false) {
+        if(Mayusculas.find(letra) != string::npos){ /* Si el indice que devuelve find al buscar a letra en Mayusculas, es diferente de un valor fuera de rango */
+            letra = minusculas[Mayusculas.find(letra)];
+            aceptable = true;
+        }
+        else if(minusculas.find(letra) != string::npos){ /* Si el indice que devuelve find al buscar a letra en minusculas, es diferente de un valor fuera de rango */
+            letra = Mayusculas[minusculas.find(letra)];
+            aceptable = true;
+        }
+        else {
+            cout<<"\nEl caracter que ingresaste NO es valido, ingresa una letra: ";
+            cin>>letra;
+        }
+
+    }
+    cout<<endl<<"Letra convertida: "<<letra<<endl;
 
     system("pause");
     system("cls");
@@ -508,8 +620,23 @@ void ejercicio_21(){
     EJECICIO No. 21
 */
 void ejercicio_22(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CONVERTIR SEGUNDOS A H:M:S\n";
 
+    int segundos, horas, minutos; float h, m, s; string segundosTEXTOS;
+    cout<<"\nIngresaa la cantidad de segundos: ";cin>>segundosTEXTOS;
+    segundos = verificar_entero(segundosTEXTOS);
+    while (segundos < 0) {
+        cout<<"HAS INGRESADO UN VALOR NO VALIDO.\n";
+        segundos = verificar_entero("NO VALIDO");
+    }
+    h = segundos/3600.0;
+    horas = h;
+    m = h - horas;
+    m = m*60;
+    minutos = m;
+    s = m - minutos;
+    segundos = s*60;
+    cout<<"\nLa conversion a h:m:s es: "<<horas<<":"<<minutos<<":"<<segundos<<endl;
     system("pause");
     system("cls");
 }
@@ -520,7 +647,31 @@ void ejercicio_22(){
     EJECICIO No. 23
 */
 void ejercicio_23(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   EL MINIMO COMUN MULTIPLO DE N1 y N2\n";
+
+    string A,B; int N1,N2; bool N1EsNegativo = false, N2EsNegativo = false;
+    cout<<"\nIngresa un numero entero: ";cin>>A;
+    N1 = verificar_entero(A);
+    cout<<"\nIngresa otro numero entero: ";cin>>B;
+    N2 = verificar_entero(B);
+    if (N1 < 0) {N1 = -1*N1; N1EsNegativo = true;}
+    if (N1 < 0) {N2 = -1*N2; N2EsNegativo = true;}
+
+    if (N1 == 0 || N2 == 0) cout<<"\nPara esos dos numeros NO esta definido el m.c.m\n\n";
+    else {
+        int mayor = (N1 > N2) ? N1:N2;
+        int menor = (N1 < N2) ? N1:N2;
+        int i = 1;
+        int control = 0;
+        int MCM;
+        while (control == 0) {
+            if((mayor*i)%menor == 0){MCM = mayor*i; control = 1;}
+            i += 1;
+        }
+        if(N1EsNegativo) N1 = -1*N1;
+        if(N2EsNegativo) N2 = -1*N2;
+        cout<<"\nEl M.C.M entre |"<<N1<<"| y |"<<N2<<"| es "<<MCM<<endl<<endl;
+    }
 
     system("pause");
     system("cls");
@@ -532,7 +683,25 @@ void ejercicio_23(){
     EJECICIO No. 24
 */
 void ejercicio_24(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CONSTRUIR UN CUADRADO CON N\n";
+
+    string l; int lado;
+    cout<<"\nIngresa un numero entero positivo(lado): ";cin>>l;
+    lado = verificar_entero(l);
+    lado = mayor_a_0(lado);
+
+    for (int i = 1; i <= lado; ++i) {
+        if(i == 1 || i == lado){
+            for (int j = 1; j <= lado; ++j) {cout<<"+";}
+            cout<<endl;
+        }
+        else {
+            cout<<"+";
+            for (int k = 2; k <= lado-1; ++k) {cout<<" ";}
+            cout<<"+";
+            cout<<endl;
+        }
+    }
 
     system("pause");
     system("cls");
@@ -544,7 +713,19 @@ void ejercicio_24(){
     EJECICIO No. 25
 */
 void ejercicio_25(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CUANTOS DIGITOS TIENE  N\n";
+
+    string n; int N;
+    cout<<"\nIngresa un numero entero: "; cin>>n;
+    N = verificar_entero(n);
+
+    int copia_N = N; if(copia_N < 0) copia_N = -1*copia_N;
+    int contador = 0;
+    while (copia_N > 0) {
+        copia_N = copia_N/10;
+        contador += 1;
+    }
+    cout<<endl<<N<<" tiene "<<contador<<" digitos\n\n";
 
     system("pause");
     system("cls");
@@ -556,7 +737,25 @@ void ejercicio_25(){
     EJECICIO No. 26
 */
 void ejercicio_26(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   QUE TRIANGULO SE FORMA CON A,B,C?\n";
+
+    string a,b,c; int A,B,C;
+    cout<<"\nIngresa un numero (a) entero mayor a 0: "; cin>>a;
+    A = verificar_entero(a);
+    A = mayor_a_0(A);
+    cout<<"\nIngresa otro numero (b) entero mayor a 0: "; cin>>b;
+    B = verificar_entero(b);
+    B = mayor_a_0(B);
+    cout<<"\nIngresa otro numero (c) entero mayor a 0: "; cin>>c;
+    C = verificar_entero(c);
+    C = mayor_a_0(C);
+
+    if(A+B <= C) cout<<"\nLas longitudes "<<A<<","<<B<<" y "<<C<<" NO forman un triangulo\n\n";
+    else {
+        if (A == B && C != A) cout<<"\nSe forma un triangulo Isosceles\n\n";
+        else if (A == B && C == A) cout<<"\nSe forma un triangulo Equilatero\n\n";
+        else cout<<"\nSe forma un triangulo Escaleno\n\n";
+    }
 
     system("pause");
     system("cls");
@@ -568,7 +767,29 @@ void ejercicio_26(){
     EJECICIO No. 27
 */
 void ejercicio_27(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   CALCULADORA\n";
+    string a,b; char operador; float A,B;
+
+    cout<<"Ingresa un numero: ";cin>>a;
+    A = verificar_entero(a);
+    cout<<"Ingresa otro numero: ";cin>>b;
+    B = verificar_entero(b);
+    cout<<"\nQue operacion quieres realiza?\nESCRIBE (+), (-), (x) o (/): ";
+    cin>>operador;
+    while (operador != '+' && operador != '-' && operador != 'x' && operador != '/') {
+        cout<<"\nOperador invalido, ingresa (+), (-), (x) o (/): "; cin>>operador;
+    }
+
+    switch (operador) {
+    case '+':
+        cout<<A<<"+"<<B<<"="<<A+B<<endl; break;
+    case '-':
+        cout<<A<<"-"<<B<<"="<<A-B<<endl; break;
+    case 'x':
+        cout<<A<<"x"<<B<<"="<<A*B<<endl; break;
+    case '/':
+        cout<<A<<"/"<<B<<"="<<(A/B)<<endl; break;
+    }
 
     system("pause");
     system("cls");
@@ -580,7 +801,26 @@ void ejercicio_27(){
     EJECICIO No. 28
 */
 void ejercicio_28(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   APROXIMACION DE PI\n";
+
+    int N; string n;
+    cout << "Ingrese el numero de elementos usados en la aproximacion: "; cin >> n;
+    N = verificar_entero(n);
+    N = mayor_a_0(N);
+
+    double pi = 0.0;
+    for (int i = 0; i < N; i++) {
+        // Alterna entre sumar y restar términos
+        if (i % 2 == 0) {
+            pi += 1.0 / (2 * i + 1);
+        } else {
+            pi -= 1.0 / (2 * i + 1);
+        }
+    }
+
+    pi *= 4; // Multiplica el resultado final por 4
+
+    cout << "\npi es aproximadamente: " << pi <<endl<<endl;
 
     system("pause");
     system("cls");
@@ -592,7 +832,27 @@ void ejercicio_28(){
     EJECICIO No. 29
 */
 void ejercicio_29(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   ADIVINAR NUMERO A (entre 0 y 100)\n";
+
+    char opcion = 'i';
+    int superior = 100;
+    int inferior = 0;
+    int medio = (superior + inferior)/2;
+    while (opcion != '=') {
+        cout<<"\nEl numero que estas pensando es el "<<medio<<"?\n";
+        cout<<"Si adivine escribe '='o de lo contrario escribe '<' o '>' segun corresponda: ";
+        cin>>opcion;
+        if (opcion == '<'){
+            superior = medio;
+            medio = (superior + inferior)/2;
+        }
+        else if(opcion == '>'){
+            inferior = medio;
+            medio = (superior + inferior)/2;
+        }
+        else if(opcion == '=') cout<<"\nNUMERO ADIVINADO\n\n";
+        else cout<<"\nOpcion NO valida\n";
+    }
 
     system("pause");
     system("cls");
@@ -604,7 +864,28 @@ void ejercicio_29(){
     EJECICIO No. 30
 */
 void ejercicio_30(){
-    cout<<"\n   TÍTULO\n";
+    cout<<"\n   ADIVINAR NUMERO\n";
+    srand(time(0)); /* Esto es para que rand() me genere valores dsitintos en cada ejecucion*/
+    int numero = rand() & 100;
+    int entrada; string texto;
+    cout<<"\nEscribe el numero que estoy pensando: "; cin>>texto;
+    entrada = verificar_entero(texto);
+
+    bool acertado = false;
+    while (acertado == false) {
+        if (numero == entrada) {cout<<"\n\nADIVINASTE!\n"; acertado = true;}
+        else if (entrada < numero) {
+            cout<<"\nEl numero es mas grande, intentalo de nuevo: "; cin>>texto;
+            entrada = verificar_entero(texto);
+        }
+        else if (entrada > numero) {
+            cout<<"\nEl numero es mas pequeno, intentalo de nuevo: "; cin>>texto;
+            entrada = verificar_entero(texto);
+        }
+        else {cout<<"\nNO ingresaste una opcion valida, intentalo de nuevo: "; cin>>texto;
+            entrada = verificar_entero(texto);
+        }
+    }
 
     system("pause");
     system("cls");
@@ -643,4 +924,14 @@ int verificar_entero(string numero_en_texto){ /* Esta función verifica si un st
     if (El_numero_es_negativo) return -1*stoi(numero_en_texto);
     else return stoi(numero_en_texto);
 
+}
+
+
+
+int mayor_a_0 (int N){
+    while (N <= 0) {
+        cout<<"\nNumero invalido, engresa un numero mayor a 0.\n";
+        N = verificar_entero("No");
+    }
+    return N;
 }
